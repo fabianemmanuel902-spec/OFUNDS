@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OFUNDS - Earn Live</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .gradient-bg { background: linear-gradient(135deg, #0f172a 0%, #1e2937 100%); }
+    .balance-text { font-size: 3.5rem; font-weight: 900; letter-spacing: -2px; }
+    .neon-glow { text-shadow: 0 0 20px rgb(234 179 8); }
+  </style>
+</head>
+<body class="bg-zinc-950 text-white min-h-screen gradient-bg">
+
+  <!-- AUTH SCREEN -->
+  <div id="auth-screen" class="min-h-screen flex items-center justify-center p-6">
+    <div class="max-w-md w-full">
+      <div class="flex justify-center mb-10">
+        <div class="flex items-center gap-3">
+          <div class="w-12 h-12 bg-yellow-400 rounded-2xl flex items-center justify-center">
+            <i class="fa-solid fa-coins text-zinc-900 text-3xl"></i>
+          </div>
+          <div>
+            <h1 class="text-4xl font-black tracking-tighter">OFUNDS</h1>
+            <p class="text-yellow-400 text-sm -mt-1">EARN LIVE</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tabs -->
+      <div class="bg-zinc-900 rounded-3xl p-1 flex mb-8">
+        <button onclick="switchTab(0)" id="login-tab"
+          class="flex-1 py-4 rounded-3xl font-semibold bg-zinc-800 text-white">Login</button>
+        <button onclick="switchTab(1)" id="signup-tab"
+          class="flex-1 py-4 rounded-3xl font-semibold">Sign Up</button>
+      </div>
+
+      <!-- LOGIN FORM -->
+      <div id="login-form">
+        <div class="space-y-5">
+          <input type="email" id="login-email" placeholder="Email address" 
+            class="w-full bg-zinc-900 border border-zinc-700 rounded-2xl px-6 py-5 focus:outline-none focus:border-yellow-400 text-white">
+          
+          <div class="relative">
+            <input type="password" id="login-password" placeholder="Password" 
+              class="w-full bg-zinc-900 border border-zinc-700 rounded-2xl px-6 py-5 focus:outline-none focus:border-yellow-400 text-white">
+            <button onclick="togglePassword('login-password')" class="absolute right-6 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-white">
+              <i class="fa-solid fa-eye" id="login-eye"></i>
+            </button>
+          </div>
+
+          <button onclick="handleLogin()" 
+            class="w-full bg-yellow-400 hover:bg-yellow-300 text-zinc-900 font-bold py-5 rounded-2xl text-lg active:scale-95 transition">
+            LOGIN
+          </button>
+          <p id="login-message" class="text-center text-red-400 text-sm min-h-[20px]"></p>
+        </div>
+      </div>
+
+      <!-- SIGNUP FORM -->
+      <div id="signup-form" class="hidden">
+        <div class="space-y-5">
+          <input type="text" id="signup-firstname" placeholder="First name" 
+            class="w-full bg-zinc-900 border border-zinc-700 rounded-2xl px-6 py-5 focus:outline-none focus:border-yellow-400">
+          
+          <input type="email" id="signup-email" placeholder="Email address" 
+            class="w-full bg-zinc-900 border border-zinc-700 rounded-2xl px-6 py-5 focus:outline-none focus:border-yellow-400">
+          
+          <div class="relative">
+            <input type="password" id="signup-password" placeholder="Create password" 
+              class="w-full bg-zinc-900 border border-zinc-700 rounded-2xl px-6 py-5 focus:outline-none focus:border-yellow-400">
+            <button onclick="togglePassword('signup-password')" class="absolute right-6 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-white">
+              <i class="fa-solid fa-eye" id="signup-eye"></i>
+            </button>
+          </div>
+
+          <button onclick="handleSignup()" 
+            class="w-full bg-yellow-400 hover:bg-yellow-300 text-zinc-900 font-bold py-5 rounded-2xl text-lg active:scale-95 transition">
+            CREATE ACCOUNT
+          </button>
+          <p id="signup-message" class="text-center text-red-400 text-sm min-h-[20px]"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DASHBOARD -->
+  <div id="dashboard" class="hidden min-h-screen">
+    <nav class="bg-zinc-900 px-6 py-5 flex justify-between items-center border-b border-zinc-800">
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 bg-yellow-400 rounded-2xl flex items-center justify-center">
+          <i class="fa-solid fa-coins text-zinc-900"></i>
+        </div>
+        <h1 class="font-black text-2xl tracking-tighter">OFUNDS</h1>
+      </div>
+      <button onclick="logout()" class="text-zinc-400 hover:text-red-400">
+        <i class="fa-solid fa-right-from-bracket"></i>
+      </button>
+    </nav>
+
+    <div class="p-6">
+      <h2 id="welcome-name" class="text-3xl font-bold">Welcome back</h2>
+      <p class="text-zinc-400">Earn ₦500 every second</p>
+
+      <!-- Balance Card -->
+      <div class="mt-8 bg-gradient-to-br from-zinc-900 to-zinc-800 border border-yellow-400/30 rounded-3xl p-8">
+        <div class="flex justify-between items-start">
+          <div>
+            <p class="uppercase text-xs tracking-widest text-zinc-400">Total Balance</p>
+            <div class="flex items-baseline mt-3">
+              <span class="text-5xl font-black text-yellow-400">₦</span>
+              <span id="balance" class="balance-text neon-glow ml-1">0</span>
+            </div>
+          </div>
+          <button onclick="toggleBalanceVisibility()" class="mt-2">
+            <i class="fa-solid fa-eye text-2xl text-zinc-400" id="eye-icon"></i>
+          </button>
+        </div>
+
+        <button onclick="toggleEarning()" id="earn-btn"
+          class="mt-10 w-full bg-emerald-500 py-6 rounded-2xl font-bold text-lg flex items-center justify-center gap-3 hover:bg-emerald-600 transition">
+          <i class="fa-solid fa-play"></i>
+          <span id="earn-text">START EARNING LIVE</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let currentUser = null;
+    let balance = 0;
+    let isEarning = false;
+    let earningInterval = null;
+    let isVisible = true;
+
+    function switchTab(tab) {
+      document.getElementById('login-form').classList.toggle('hidden', tab === 1);
+      document.getElementById('signup-form').classList.toggle('hidden', tab === 0);
+      
+      document.getElementById('login-tab').classList.toggle('bg-zinc-800', tab === 0);
+      document.getElementById('signup-tab').classList.toggle('bg-zinc-800', tab === 1);
+    }
+
+    function togglePassword(id) {
+      const input = document.getElementById(id);
+      const iconId = id.includes('login') ? 'login-eye' : 'signup-eye';
+      const icon = document.getElementById(iconId);
+      
+      if (input.type === "password") {
+        input.type = "text";
+        icon.classList.replace('fa-eye', 'fa-eye-slash');
+      } else {
+        input.type = "password";
+        icon.classList.replace('fa-eye-slash', 'fa-eye');
+      }
+    }
+
+    function handleSignup() {
+      const firstname = document.getElementById('signup-firstname').value.trim();
+      const email = document.getElementById('signup-email').value.trim();
+      const password = document.getElementById('signup-password').value.trim();
+      const msg = document.getElementById('signup-message');
+
+      if (!firstname || !email || !password) {
+        msg.textContent = "Please fill all fields";
+        return;
+      }
+
+      currentUser = { firstname, email, password };
+      localStorage.setItem("ofunds_user", JSON.stringify(currentUser));
+      
+      msg.textContent = "✅ Account created! Now login.";
+      msg.style.color = "#4ade80";
+      setTimeout(() => switchTab(0), 1500);
+    }
+
+    function handleLogin() {
+      const email = document.getElementById('login-email').value.trim();
+      const password = document.getElementById('login-password').value.trim();
+      const msg = document.getElementById('login-message');
+
+      msg.textContent = "";
+
+      if (!email || !password) {
+        msg.textContent = "Enter email and password";
+        return;
+      }
+
+      const savedData = localStorage.getItem("ofunds_user");
+      
+      if (!savedData) {
+        msg.textContent = "No account found. Please sign up first.";
+        return;
+      }
+
+      try {
+        const user = JSON.parse(savedData);
+        
+        if (user.email === email && user.password === password) {
+          currentUser = user;
+          document.getElementById('auth-screen').classList.add('hidden');
+          document.getElementById('dashboard').classList.remove('hidden');
+          
+          document.getElementById('welcome-name').textContent = `Welcome back, ${user.firstname}!`;
+          updateBalanceDisplay();
+        } else {
+          msg.textContent = "❌ Wrong email or password";
+        }
+      } catch(e) {
+        msg.textContent = "Error loading account. Try signing up again.";
+      }
+    }
+
+    function updateBalanceDisplay() {
+      document.getElementById('balance').textContent = balance.toLocaleString('en-NG');
+    }
+
+    function toggleBalanceVisibility() {
+      isVisible = !isVisible;
+      const bal = document.getElementById('balance');
+      const icon = document.getElementById('eye-icon');
+      
+      if (!isVisible) {
+        bal.textContent = "••••••";
+        icon.classList.replace('fa-eye', 'fa-eye-slash');
+      } else {
+        updateBalanceDisplay();
+        icon.classList.replace('fa-eye-slash', 'fa-eye');
+      }
+    }
+
+    function toggleEarning() {
+      isEarning = !isEarning;
+      const btn = document.getElementById('earn-btn');
+      const text = document.getElementById('earn-text');
+
+      if (isEarning) {
+        btn.classList.add('!bg-red-500', '!hover:bg-red-600');
+        text.textContent = "STOP EARNING";
+        earningInterval = setInterval(() => {
+          balance += 500;
+          updateBalanceDisplay();
+        }, 1000);
+      } else {
+        btn.classList.remove('!bg-red-500', '!hover:bg-red-600');
+        text.textContent = "START EARNING LIVE";
+        clearInterval(earningInterval);
+      }
+    }
+
+    function logout() {
+      if (confirm("Logout from OFUNDS?")) {
+        document.getElementById('dashboard').classList.add('hidden');
+        document.getElementById('auth-screen').classList.remove('hidden');
+        clearInterval(earningInterval);
+      }
+    }
+
+    // Initialize
+    window.onload = () => {
+      // Clear old data if needed (for testing)
+      // localStorage.clear();
+    };
+  </script>
+</body>
+</html>
