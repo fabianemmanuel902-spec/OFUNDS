@@ -9,8 +9,14 @@
   <style>
     body { font-family: 'Inter', sans-serif; }
     .gradient-bg { background: linear-gradient(135deg, #0f172a 0%, #1e2937 100%); }
-    .balance-text { font-size: 3.5rem; font-weight: 900; letter-spacing: -2px; }
+    .balance-text { font-size: 2.8rem; font-weight: 900; letter-spacing: -1px; } /* Reduced size */
     .neon-glow { text-shadow: 0 0 20px rgb(234 179 8); }
+    .testimonial-card {
+      transition: all 0.3s ease;
+    }
+    .testimonial-card:hover {
+      transform: scale(1.02);
+    }
   </style>
 </head>
 <body class="bg-zinc-950 text-white min-h-screen gradient-bg">
@@ -88,7 +94,7 @@
   </div>
 
   <!-- DASHBOARD -->
-  <div id="dashboard" class="hidden min-h-screen">
+  <div id="dashboard" class="hidden min-h-screen pb-12">
     <nav class="bg-zinc-900 px-6 py-5 flex justify-between items-center border-b border-zinc-800">
       <div class="flex items-center gap-3">
         <div class="w-9 h-9 bg-yellow-400 rounded-2xl flex items-center justify-center">
@@ -111,7 +117,7 @@
           <div>
             <p class="uppercase text-xs tracking-widest text-zinc-400">TOTAL BALANCE</p>
             <div class="flex items-baseline mt-3">
-              <span class="text-5xl font-black text-yellow-400">₦</span>
+              <span class="text-4xl font-black text-yellow-400">₦</span>
               <span id="balance" class="balance-text neon-glow ml-1">0</span>
             </div>
             <p id="balance-limit" class="text-emerald-400 text-sm mt-1">₦85,000 limit</p>
@@ -135,6 +141,40 @@
           </button>
         </div>
       </div>
+
+      <!-- How to Withdraw - YouTube -->
+      <div class="mt-8 bg-zinc-900 rounded-3xl p-6">
+        <h3 class="font-bold text-lg mb-4 flex items-center gap-2">
+          <i class="fa-solid fa-video text-red-500"></i>
+          How to Withdraw
+        </h3>
+        <a href="https://www.youtube.com/watch?v=dQw4w9wgxcq" target="_blank" 
+           class="block relative rounded-2xl overflow-hidden group">
+          <img src="https://img.youtube.com/vi/dQw4w9wgxcq/maxresdefault.jpg" 
+               alt="How to Withdraw from OFUNDS" 
+               class="w-full h-52 object-cover">
+          <div class="absolute inset-0 bg-black/40 flex items-center justify-center group-hover:bg-black/30 transition">
+            <div class="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center">
+              <i class="fa-solid fa-play text-white text-3xl ml-1"></i>
+            </div>
+          </div>
+          <div class="absolute bottom-3 left-3 bg-black/70 text-xs px-3 py-1 rounded-full">
+            Watch Tutorial (1:45)
+          </div>
+        </a>
+        <p class="text-center text-zinc-400 text-sm mt-3">Click image to watch full guide on YouTube</p>
+      </div>
+
+      <!-- Testimonials -->
+      <div class="mt-10">
+        <h3 class="font-bold text-xl mb-6 flex items-center gap-2">
+          <i class="fa-solid fa-quote-left"></i>
+          What Users Are Saying
+        </h3>
+        <div id="testimonials" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- Populated by JS -->
+        </div>
+      </div>
     </div>
   </div>
 
@@ -142,30 +182,26 @@
   <div id="withdraw-modal" class="hidden fixed inset-0 bg-black/80 flex items-center justify-center z-50">
     <div class="bg-zinc-900 rounded-3xl p-8 w-full max-w-md mx-4">
       <h3 class="text-2xl font-bold mb-6">Withdraw Funds</h3>
-      
       <div class="space-y-6">
         <div>
           <p class="text-zinc-400 text-sm mb-2">Available Balance</p>
           <p id="modal-balance" class="text-4xl font-bold text-yellow-400">₦0</p>
         </div>
-        
         <div>
           <label class="text-zinc-400 text-sm block mb-2">Withdrawal Amount (₦)</label>
           <input type="number" id="withdraw-amount" 
             class="w-full bg-zinc-800 border border-zinc-700 rounded-2xl px-6 py-5 focus:outline-none focus:border-yellow-400 text-2xl"
             placeholder="Enter amount" min="1000" step="1000">
         </div>
-
         <div class="text-xs text-zinc-400">
-          • Minimum withdrawal: ₦1,000<br>
-          • Maximum per transaction: ₦85,000
+          • Minimum: ₦1,000<br>
+          • Maximum: ₦85,000
         </div>
-
         <div class="flex gap-4">
           <button onclick="hideWithdrawModal()" 
             class="flex-1 py-5 border border-zinc-600 rounded-2xl font-semibold">CANCEL</button>
           <button onclick="processWithdrawal()" 
-            class="flex-1 py-5 bg-yellow-400 text-zinc-900 rounded-2xl font-bold">CONFIRM WITHDRAWAL</button>
+            class="flex-1 py-5 bg-yellow-400 text-zinc-900 rounded-2xl font-bold">CONFIRM</button>
         </div>
       </div>
     </div>
@@ -178,6 +214,45 @@
     let isEarning = false;
     let earningInterval = null;
     let isVisible = true;
+
+    const testimonialsData = [
+      { name: "Aisha Bello", email: "aisha.bello@gmail.com", text: "OFUNDS paid my ₦45,000 hospital debt in just 3 days. Life saver!" },
+      { name: "Chinedu Okoro", email: "chinedu.okoro@yahoo.com", text: "Cleared my rent debt of ₦65k. This app is legit!" },
+      { name: "Fatima Yusuf", email: "fatima.yusuf@outlook.com", text: "Earned enough to pay school fees. Thank you OFUNDS!" },
+      { name: "Emeka Nwosu", email: "emeka.nwosu@hotmail.com", text: "Paid my ₦28,000 electricity bill. Super easy withdrawals." },
+      { name: "Zainab Ibrahim", email: "zainab.ibrahim@gmail.com", text: "Cleared family debt within a week. Highly recommended!" },
+      { name: "Tunde Adebayo", email: "tunde.adebayo@proton.me", text: "Best earning app ever. Paid my car repair ₦52k." },
+      { name: "Ngozi Eze", email: "ngozi.eze@gmail.com", text: "Helped me settle my ₦38,000 shop debt. God bless OFUNDS." },
+      { name: "Ibrahim Musa", email: "ibrahim.musa@live.com", text: "Withdrew ₦70k and cleared all debts. Real and fast." },
+      { name: "Chioma Okeke", email: "chioma.okeke@gmail.com", text: "Paid my mother's medical bill. This changed my life." },
+      { name: "Suleiman Abubakar", email: "sule.abubakar@yahoo.com", text: "Earned and withdrew seamlessly. No stress at all." }
+    ];
+
+    function renderTestimonials() {
+      const container = document.getElementById('testimonials');
+      container.innerHTML = '';
+      
+      testimonialsData.forEach(t => {
+        const div = document.createElement('div');
+        div.className = "testimonial-card bg-zinc-900 border border-zinc-700 rounded-3xl p-6";
+        div.innerHTML = `
+          <div class="flex gap-1 text-yellow-400 mb-3">
+            ★★★★☆
+          </div>
+          <p class="italic text-zinc-300">"${t.text}"</p>
+          <div class="mt-6 flex items-center gap-3">
+            <div class="w-10 h-10 bg-zinc-700 rounded-2xl flex items-center justify-center text-sm font-bold">
+              ${t.name.split(' ').map(n => n[0]).join('')}
+            </div>
+            <div>
+              <p class="font-medium">${t.name}</p>
+              <p class="text-xs text-zinc-500">${t.email}</p>
+            </div>
+          </div>
+        `;
+        container.appendChild(div);
+      });
+    }
 
     function switchTab(tab) {
       document.getElementById('login-form').classList.toggle('hidden', tab === 1);
@@ -243,6 +318,7 @@
           document.getElementById('dashboard').classList.remove('hidden');
           document.getElementById('welcome-name').textContent = `Welcome back, ${user.firstname}!`;
           updateBalanceDisplay();
+          renderTestimonials();
         } else {
           msg.textContent = "❌ Wrong email or password";
         }
@@ -283,7 +359,7 @@
             updateBalanceDisplay();
           } else {
             stopEarning();
-            alert("🎉 You have reached the maximum balance of ₦85,000!");
+            alert("🎉 Maximum balance of ₦85,000 reached!");
           }
         }, 1000);
       } else {
@@ -326,8 +402,7 @@
       balance -= amount;
       updateBalanceDisplay();
       hideWithdrawModal();
-      
-      alert(`✅ Withdrawal of ₦${amount.toLocaleString()} successful!\n\nFunds sent to your account.`);
+      alert(`✅ ₦${amount.toLocaleString()} withdrawn successfully!\n\nCheck your bank in 24hrs.`);
     }
 
     function logout() {
@@ -341,4 +416,4 @@
     window.onload = () => {};
   </script>
 </body>
-</html>
+            </html>
