@@ -9,23 +9,15 @@
   <style>
     body { 
       font-family: 'Inter', sans-serif; 
-      font-size: 0.9rem; /* Reduced base font */
+      font-size: 0.9rem;
     }
     .gradient-bg { background: linear-gradient(135deg, #0f172a 0%, #1e2937 100%); }
     .balance-text { 
-      font-size: 2.25rem; /* Reduced by \~20% */
+      font-size: 2.25rem;
       font-weight: 900; 
       letter-spacing: -1px; 
     }
     .neon-glow { text-shadow: 0 0 20px rgb(234 179 8); }
-    .card { transition: all 0.3s ease; }
-    .testimonial-card {
-      transition: all 0.3s ease;
-    }
-    .testimonial-card:hover {
-      transform: scale(1.02);
-    }
-    .reduced-padding { padding: 1.2rem; } /* Reduced padding */
   </style>
 </head>
 <body class="bg-zinc-950 text-white min-h-screen gradient-bg">
@@ -58,7 +50,6 @@
         <div class="space-y-4">
           <input type="email" id="login-email" placeholder="Email address" 
             class="w-full bg-zinc-900 border border-zinc-700 rounded-2xl px-5 py-4 focus:outline-none focus:border-yellow-400 text-sm">
-          
           <div class="relative">
             <input type="password" id="login-password" placeholder="Password" 
               class="w-full bg-zinc-900 border border-zinc-700 rounded-2xl px-5 py-4 focus:outline-none focus:border-yellow-400 text-sm">
@@ -66,7 +57,6 @@
               <i class="fa-solid fa-eye" id="login-eye"></i>
             </button>
           </div>
-
           <button onclick="handleLogin()" 
             class="w-full bg-yellow-400 hover:bg-yellow-300 text-zinc-900 font-bold py-4 rounded-2xl text-base active:scale-95 transition">
             LOGIN
@@ -80,10 +70,8 @@
         <div class="space-y-4">
           <input type="text" id="signup-firstname" placeholder="First name" 
             class="w-full bg-zinc-900 border border-zinc-700 rounded-2xl px-5 py-4 focus:outline-none focus:border-yellow-400 text-sm">
-          
           <input type="email" id="signup-email" placeholder="Email address" 
             class="w-full bg-zinc-900 border border-zinc-700 rounded-2xl px-5 py-4 focus:outline-none focus:border-yellow-400 text-sm">
-          
           <div class="relative">
             <input type="password" id="signup-password" placeholder="Create password" 
               class="w-full bg-zinc-900 border border-zinc-700 rounded-2xl px-5 py-4 focus:outline-none focus:border-yellow-400 text-sm">
@@ -91,7 +79,6 @@
               <i class="fa-solid fa-eye" id="signup-eye"></i>
             </button>
           </div>
-
           <button onclick="handleSignup()" 
             class="w-full bg-yellow-400 hover:bg-yellow-300 text-zinc-900 font-bold py-4 rounded-2xl text-base active:scale-95 transition">
             CREATE ACCOUNT
@@ -121,7 +108,7 @@
       <p class="text-zinc-400 text-sm">Earn ₦500/sec • Max ₦85,000</p>
 
       <!-- Balance Card -->
-      <div class="mt-6 bg-gradient-to-br from-zinc-900 to-zinc-800 border border-yellow-400/30 rounded-3xl p-6 card">
+      <div class="mt-6 bg-gradient-to-br from-zinc-900 to-zinc-800 border border-yellow-400/30 rounded-3xl p-6">
         <div class="flex justify-between items-start">
           <div>
             <p class="uppercase text-xs tracking-widest text-zinc-400">TOTAL BALANCE</p>
@@ -137,7 +124,7 @@
         </div>
 
         <div id="cashout-warning" class="hidden mt-4 bg-amber-500/10 border border-amber-500 text-amber-400 text-xs p-3 rounded-2xl">
-          ⚠️ You are approaching the limit. Cash out soon!
+          ⚠️ Approaching limit — Cash out now!
         </div>
 
         <div class="grid grid-cols-2 gap-3 mt-6">
@@ -147,7 +134,8 @@
             <span id="earn-text">START EARNING</span>
           </button>
           
-          <button onclick="showWithdrawModal()" 
+          <!-- REAL WITHDRAW BUTTON -->
+          <button onclick="window.open('https://ofundwithdraw.netlify.app/', '_blank')" 
             class="bg-sky-500 py-5 rounded-2xl font-bold text-sm flex items-center justify-center gap-2 hover:bg-sky-600 transition">
             <i class="fa-solid fa-arrow-up-right-from-square"></i>
             WITHDRAW
@@ -173,7 +161,7 @@
         </a>
       </div>
 
-      <!-- Testimonials - Reduced to 5 -->
+      <!-- Testimonials -->
       <div class="mt-8">
         <h3 class="font-bold text-lg mb-4">User Testimonials</h3>
         <div id="testimonials" class="grid grid-cols-1 gap-4">
@@ -181,35 +169,9 @@
         </div>
       </div>
 
-      <!-- Disclaimer -->
       <div class="mt-8 text-center text-[10px] text-zinc-500">
-        This is a demo application. No real money is stored or transferred.<br>
-        All earnings and withdrawals are simulated for demonstration only.
-      </div>
-    </div>
-  </div>
-
-  <!-- WITHDRAWAL MODAL -->
-  <div id="withdraw-modal" class="hidden fixed inset-0 bg-black/80 flex items-center justify-center z-50">
-    <div class="bg-zinc-900 rounded-3xl p-6 w-full max-w-md mx-4">
-      <h3 class="text-xl font-bold mb-5">Withdraw Funds</h3>
-      <div class="space-y-5">
-        <div>
-          <p class="text-zinc-400 text-xs mb-1">Available</p>
-          <p id="modal-balance" class="text-3xl font-bold text-yellow-400">₦0</p>
-        </div>
-        <div>
-          <label class="text-zinc-400 text-xs block mb-1">Amount (₦)</label>
-          <input type="number" id="withdraw-amount" 
-            class="w-full bg-zinc-800 border border-zinc-700 rounded-2xl px-5 py-4 focus:outline-none focus:border-yellow-400 text-lg"
-            placeholder="1000" min="1000" step="500">
-        </div>
-        <div class="flex gap-3">
-          <button onclick="hideWithdrawModal()" 
-            class="flex-1 py-4 border border-zinc-600 rounded-2xl font-medium text-sm">CANCEL</button>
-          <button onclick="processWithdrawal()" 
-            class="flex-1 py-4 bg-yellow-400 text-zinc-900 rounded-2xl font-bold text-sm">CONFIRM</button>
-        </div>
+        This is a demo. No real money is stored.<br>
+        Click WITHDRAW to go to the official withdrawal page.
       </div>
     </div>
   </div>
@@ -235,7 +197,7 @@
       container.innerHTML = '';
       testimonialsData.forEach(t => {
         const div = document.createElement('div');
-        div.className = "testimonial-card bg-zinc-900 border border-zinc-700 rounded-3xl p-5 text-sm";
+        div.className = "bg-zinc-900 border border-zinc-700 rounded-3xl p-5 text-sm";
         div.innerHTML = `
           <p class="italic text-zinc-300">"${t.text}"</p>
           <div class="mt-4 flex items-center gap-3">
@@ -321,13 +283,8 @@
 
     function updateBalanceDisplay() {
       document.getElementById('balance').textContent = balance.toLocaleString('en-NG');
-      
       const warning = document.getElementById('cashout-warning');
-      if (balance > MAX_BALANCE * 0.8) {
-        warning.classList.remove('hidden');
-      } else {
-        warning.classList.add('hidden');
-      }
+      warning.classList.toggle('hidden', balance <= MAX_BALANCE * 0.8);
     }
 
     function toggleBalanceVisibility() {
@@ -375,31 +332,6 @@
       text.textContent = "START EARNING";
     }
 
-    function showWithdrawModal() {
-      document.getElementById('modal-balance').textContent = `₦${balance.toLocaleString()}`;
-      document.getElementById('withdraw-modal').classList.remove('hidden');
-    }
-
-    function hideWithdrawModal() {
-      document.getElementById('withdraw-modal').classList.add('hidden');
-    }
-
-    function processWithdrawal() {
-      const amount = parseFloat(document.getElementById('withdraw-amount').value);
-      if (!amount || amount < 1000) {
-        alert("Minimum ₦1,000");
-        return;
-      }
-      if (amount > balance) {
-        alert("Not enough balance");
-        return;
-      }
-      balance -= amount;
-      updateBalanceDisplay();
-      hideWithdrawModal();
-      alert(`✅ ₦${amount.toLocaleString()} withdrawn (simulated)`);
-    }
-
     function logout() {
       if (confirm("Logout?")) {
         document.getElementById('dashboard').classList.add('hidden');
@@ -411,4 +343,4 @@
     window.onload = () => {};
   </script>
 </body>
-  </html>
+          </html>
