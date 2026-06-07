@@ -7,16 +7,25 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
   <style>
-    body { font-family: 'Inter', sans-serif; }
+    body { 
+      font-family: 'Inter', sans-serif; 
+      font-size: 0.9rem; /* Reduced base font */
+    }
     .gradient-bg { background: linear-gradient(135deg, #0f172a 0%, #1e2937 100%); }
-    .balance-text { font-size: 2.8rem; font-weight: 900; letter-spacing: -1px; } /* Reduced size */
+    .balance-text { 
+      font-size: 2.25rem; /* Reduced by \~20% */
+      font-weight: 900; 
+      letter-spacing: -1px; 
+    }
     .neon-glow { text-shadow: 0 0 20px rgb(234 179 8); }
+    .card { transition: all 0.3s ease; }
     .testimonial-card {
       transition: all 0.3s ease;
     }
     .testimonial-card:hover {
       transform: scale(1.02);
     }
+    .reduced-padding { padding: 1.2rem; } /* Reduced padding */
   </style>
 </head>
 <body class="bg-zinc-950 text-white min-h-screen gradient-bg">
@@ -24,70 +33,70 @@
   <!-- AUTH SCREEN -->
   <div id="auth-screen" class="min-h-screen flex items-center justify-center p-6">
     <div class="max-w-md w-full">
-      <div class="flex justify-center mb-10">
+      <div class="flex justify-center mb-8">
         <div class="flex items-center gap-3">
-          <div class="w-12 h-12 bg-yellow-400 rounded-2xl flex items-center justify-center">
-            <i class="fa-solid fa-coins text-zinc-900 text-3xl"></i>
+          <div class="w-10 h-10 bg-yellow-400 rounded-2xl flex items-center justify-center">
+            <i class="fa-solid fa-coins text-zinc-900 text-2xl"></i>
           </div>
           <div>
-            <h1 class="text-4xl font-black tracking-tighter">OFUNDS</h1>
-            <p class="text-yellow-400 text-sm -mt-1">EARN LIVE</p>
+            <h1 class="text-3xl font-black tracking-tighter">OFUNDS</h1>
+            <p class="text-yellow-400 text-xs -mt-1">EARN LIVE</p>
           </div>
         </div>
       </div>
 
       <!-- Tabs -->
-      <div class="bg-zinc-900 rounded-3xl p-1 flex mb-8">
+      <div class="bg-zinc-900 rounded-3xl p-1 flex mb-6">
         <button onclick="switchTab(0)" id="login-tab"
-          class="flex-1 py-4 rounded-3xl font-semibold bg-zinc-800 text-white">Login</button>
+          class="flex-1 py-3 rounded-3xl font-semibold bg-zinc-800 text-white text-sm">Login</button>
         <button onclick="switchTab(1)" id="signup-tab"
-          class="flex-1 py-4 rounded-3xl font-semibold">Sign Up</button>
+          class="flex-1 py-3 rounded-3xl font-semibold text-sm">Sign Up</button>
       </div>
 
       <!-- LOGIN FORM -->
       <div id="login-form">
-        <div class="space-y-5">
+        <div class="space-y-4">
           <input type="email" id="login-email" placeholder="Email address" 
-            class="w-full bg-zinc-900 border border-zinc-700 rounded-2xl px-6 py-5 focus:outline-none focus:border-yellow-400 text-white">
+            class="w-full bg-zinc-900 border border-zinc-700 rounded-2xl px-5 py-4 focus:outline-none focus:border-yellow-400 text-sm">
           
           <div class="relative">
             <input type="password" id="login-password" placeholder="Password" 
-              class="w-full bg-zinc-900 border border-zinc-700 rounded-2xl px-6 py-5 focus:outline-none focus:border-yellow-400 text-white">
-            <button onclick="togglePassword('login-password')" class="absolute right-6 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-white">
+              class="w-full bg-zinc-900 border border-zinc-700 rounded-2xl px-5 py-4 focus:outline-none focus:border-yellow-400 text-sm">
+            <button onclick="togglePassword('login-password')" class="absolute right-5 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-white">
               <i class="fa-solid fa-eye" id="login-eye"></i>
             </button>
           </div>
 
           <button onclick="handleLogin()" 
-            class="w-full bg-yellow-400 hover:bg-yellow-300 text-zinc-900 font-bold py-5 rounded-2xl text-lg active:scale-95 transition">
+            class="w-full bg-yellow-400 hover:bg-yellow-300 text-zinc-900 font-bold py-4 rounded-2xl text-base active:scale-95 transition">
             LOGIN
           </button>
-          <p id="login-message" class="text-center text-red-400 text-sm min-h-[20px]"></p>
+          <p id="login-message" class="text-center text-red-400 text-xs min-h-[20px]"></p>
         </div>
       </div>
 
       <!-- SIGNUP FORM -->
       <div id="signup-form" class="hidden">
-        <div class="space-y-5">
+        <div class="space-y-4">
           <input type="text" id="signup-firstname" placeholder="First name" 
-            class="w-full bg-zinc-900 border border-zinc-700 rounded-2xl px-6 py-5 focus:outline-none focus:border-yellow-400">
+            class="w-full bg-zinc-900 border border-zinc-700 rounded-2xl px-5 py-4 focus:outline-none focus:border-yellow-400 text-sm">
           
           <input type="email" id="signup-email" placeholder="Email address" 
-            class="w-full bg-zinc-900 border border-zinc-700 rounded-2xl px-6 py-5 focus:outline-none focus:border-yellow-400">
+            class="w-full bg-zinc-900 border border-zinc-700 rounded-2xl px-5 py-4 focus:outline-none focus:border-yellow-400 text-sm">
           
           <div class="relative">
             <input type="password" id="signup-password" placeholder="Create password" 
-              class="w-full bg-zinc-900 border border-zinc-700 rounded-2xl px-6 py-5 focus:outline-none focus:border-yellow-400">
-            <button onclick="togglePassword('signup-password')" class="absolute right-6 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-white">
+              class="w-full bg-zinc-900 border border-zinc-700 rounded-2xl px-5 py-4 focus:outline-none focus:border-yellow-400 text-sm">
+            <button onclick="togglePassword('signup-password')" class="absolute right-5 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-white">
               <i class="fa-solid fa-eye" id="signup-eye"></i>
             </button>
           </div>
 
           <button onclick="handleSignup()" 
-            class="w-full bg-yellow-400 hover:bg-yellow-300 text-zinc-900 font-bold py-5 rounded-2xl text-lg active:scale-95 transition">
+            class="w-full bg-yellow-400 hover:bg-yellow-300 text-zinc-900 font-bold py-4 rounded-2xl text-base active:scale-95 transition">
             CREATE ACCOUNT
           </button>
-          <p id="signup-message" class="text-center text-red-400 text-sm min-h-[20px]"></p>
+          <p id="signup-message" class="text-center text-red-400 text-xs min-h-[20px]"></p>
         </div>
       </div>
     </div>
@@ -95,113 +104,111 @@
 
   <!-- DASHBOARD -->
   <div id="dashboard" class="hidden min-h-screen pb-12">
-    <nav class="bg-zinc-900 px-6 py-5 flex justify-between items-center border-b border-zinc-800">
-      <div class="flex items-center gap-3">
-        <div class="w-9 h-9 bg-yellow-400 rounded-2xl flex items-center justify-center">
-          <i class="fa-solid fa-coins text-zinc-900"></i>
+    <nav class="bg-zinc-900 px-5 py-4 flex justify-between items-center border-b border-zinc-800">
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-8 bg-yellow-400 rounded-2xl flex items-center justify-center">
+          <i class="fa-solid fa-coins text-zinc-900 text-xl"></i>
         </div>
-        <h1 class="font-black text-2xl tracking-tighter">OFUNDS</h1>
+        <h1 class="font-black text-xl tracking-tighter">OFUNDS</h1>
       </div>
       <button onclick="logout()" class="text-zinc-400 hover:text-red-400">
         <i class="fa-solid fa-right-from-bracket"></i>
       </button>
     </nav>
 
-    <div class="p-6 max-w-5xl mx-auto">
-      <h2 id="welcome-name" class="text-3xl font-bold">Welcome back</h2>
-      <p class="text-zinc-400">Earn ₦500 every second • Max ₦85,000</p>
+    <div class="p-5 max-w-5xl mx-auto">
+      <h2 id="welcome-name" class="text-2xl font-bold">Welcome back</h2>
+      <p class="text-zinc-400 text-sm">Earn ₦500/sec • Max ₦85,000</p>
 
       <!-- Balance Card -->
-      <div class="mt-8 bg-gradient-to-br from-zinc-900 to-zinc-800 border border-yellow-400/30 rounded-3xl p-8">
+      <div class="mt-6 bg-gradient-to-br from-zinc-900 to-zinc-800 border border-yellow-400/30 rounded-3xl p-6 card">
         <div class="flex justify-between items-start">
           <div>
             <p class="uppercase text-xs tracking-widest text-zinc-400">TOTAL BALANCE</p>
-            <div class="flex items-baseline mt-3">
-              <span class="text-4xl font-black text-yellow-400">₦</span>
+            <div class="flex items-baseline mt-2">
+              <span class="text-3xl font-black text-yellow-400">₦</span>
               <span id="balance" class="balance-text neon-glow ml-1">0</span>
             </div>
-            <p id="balance-limit" class="text-emerald-400 text-sm mt-1">₦85,000 limit</p>
+            <p id="balance-limit" class="text-emerald-400 text-xs mt-1">₦85,000 limit</p>
           </div>
-          <button onclick="toggleBalanceVisibility()" class="mt-2">
-            <i class="fa-solid fa-eye text-2xl text-zinc-400" id="eye-icon"></i>
+          <button onclick="toggleBalanceVisibility()" class="mt-1">
+            <i class="fa-solid fa-eye text-xl text-zinc-400" id="eye-icon"></i>
           </button>
         </div>
 
-        <div class="grid grid-cols-2 gap-4 mt-10">
+        <div id="cashout-warning" class="hidden mt-4 bg-amber-500/10 border border-amber-500 text-amber-400 text-xs p-3 rounded-2xl">
+          ⚠️ You are approaching the limit. Cash out soon!
+        </div>
+
+        <div class="grid grid-cols-2 gap-3 mt-6">
           <button onclick="toggleEarning()" id="earn-btn"
-            class="bg-emerald-500 py-6 rounded-2xl font-bold text-lg flex items-center justify-center gap-3 hover:bg-emerald-600 transition">
+            class="bg-emerald-500 py-5 rounded-2xl font-bold text-sm flex items-center justify-center gap-2 hover:bg-emerald-600 transition">
             <i class="fa-solid fa-play"></i>
             <span id="earn-text">START EARNING</span>
           </button>
           
           <button onclick="showWithdrawModal()" 
-            class="bg-sky-500 py-6 rounded-2xl font-bold text-lg flex items-center justify-center gap-3 hover:bg-sky-600 transition">
+            class="bg-sky-500 py-5 rounded-2xl font-bold text-sm flex items-center justify-center gap-2 hover:bg-sky-600 transition">
             <i class="fa-solid fa-arrow-up-right-from-square"></i>
             WITHDRAW
           </button>
         </div>
       </div>
 
-      <!-- How to Withdraw - YouTube -->
-      <div class="mt-8 bg-zinc-900 rounded-3xl p-6">
-        <h3 class="font-bold text-lg mb-4 flex items-center gap-2">
+      <!-- YouTube Tutorial -->
+      <div class="mt-6 bg-zinc-900 rounded-3xl p-5">
+        <h3 class="font-bold text-base mb-3 flex items-center gap-2">
           <i class="fa-solid fa-video text-red-500"></i>
           How to Withdraw
         </h3>
         <a href="https://www.youtube.com/watch?v=dQw4w9wgxcq" target="_blank" 
            class="block relative rounded-2xl overflow-hidden group">
           <img src="https://img.youtube.com/vi/dQw4w9wgxcq/maxresdefault.jpg" 
-               alt="How to Withdraw from OFUNDS" 
-               class="w-full h-52 object-cover">
-          <div class="absolute inset-0 bg-black/40 flex items-center justify-center group-hover:bg-black/30 transition">
-            <div class="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center">
-              <i class="fa-solid fa-play text-white text-3xl ml-1"></i>
+               alt="How to Withdraw" class="w-full h-40 object-cover">
+          <div class="absolute inset-0 bg-black/50 flex items-center justify-center group-hover:bg-black/30 transition">
+            <div class="w-12 h-12 bg-red-600 rounded-full flex items-center justify-center">
+              <i class="fa-solid fa-play text-white text-2xl ml-1"></i>
             </div>
           </div>
-          <div class="absolute bottom-3 left-3 bg-black/70 text-xs px-3 py-1 rounded-full">
-            Watch Tutorial (1:45)
-          </div>
         </a>
-        <p class="text-center text-zinc-400 text-sm mt-3">Click image to watch full guide on YouTube</p>
       </div>
 
-      <!-- Testimonials -->
-      <div class="mt-10">
-        <h3 class="font-bold text-xl mb-6 flex items-center gap-2">
-          <i class="fa-solid fa-quote-left"></i>
-          What Users Are Saying
-        </h3>
-        <div id="testimonials" class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <!-- Populated by JS -->
+      <!-- Testimonials - Reduced to 5 -->
+      <div class="mt-8">
+        <h3 class="font-bold text-lg mb-4">User Testimonials</h3>
+        <div id="testimonials" class="grid grid-cols-1 gap-4">
+          <!-- JS populated -->
         </div>
+      </div>
+
+      <!-- Disclaimer -->
+      <div class="mt-8 text-center text-[10px] text-zinc-500">
+        This is a demo application. No real money is stored or transferred.<br>
+        All earnings and withdrawals are simulated for demonstration only.
       </div>
     </div>
   </div>
 
   <!-- WITHDRAWAL MODAL -->
   <div id="withdraw-modal" class="hidden fixed inset-0 bg-black/80 flex items-center justify-center z-50">
-    <div class="bg-zinc-900 rounded-3xl p-8 w-full max-w-md mx-4">
-      <h3 class="text-2xl font-bold mb-6">Withdraw Funds</h3>
-      <div class="space-y-6">
+    <div class="bg-zinc-900 rounded-3xl p-6 w-full max-w-md mx-4">
+      <h3 class="text-xl font-bold mb-5">Withdraw Funds</h3>
+      <div class="space-y-5">
         <div>
-          <p class="text-zinc-400 text-sm mb-2">Available Balance</p>
-          <p id="modal-balance" class="text-4xl font-bold text-yellow-400">₦0</p>
+          <p class="text-zinc-400 text-xs mb-1">Available</p>
+          <p id="modal-balance" class="text-3xl font-bold text-yellow-400">₦0</p>
         </div>
         <div>
-          <label class="text-zinc-400 text-sm block mb-2">Withdrawal Amount (₦)</label>
+          <label class="text-zinc-400 text-xs block mb-1">Amount (₦)</label>
           <input type="number" id="withdraw-amount" 
-            class="w-full bg-zinc-800 border border-zinc-700 rounded-2xl px-6 py-5 focus:outline-none focus:border-yellow-400 text-2xl"
-            placeholder="Enter amount" min="1000" step="1000">
+            class="w-full bg-zinc-800 border border-zinc-700 rounded-2xl px-5 py-4 focus:outline-none focus:border-yellow-400 text-lg"
+            placeholder="1000" min="1000" step="500">
         </div>
-        <div class="text-xs text-zinc-400">
-          • Minimum: ₦1,000<br>
-          • Maximum: ₦85,000
-        </div>
-        <div class="flex gap-4">
+        <div class="flex gap-3">
           <button onclick="hideWithdrawModal()" 
-            class="flex-1 py-5 border border-zinc-600 rounded-2xl font-semibold">CANCEL</button>
+            class="flex-1 py-4 border border-zinc-600 rounded-2xl font-medium text-sm">CANCEL</button>
           <button onclick="processWithdrawal()" 
-            class="flex-1 py-5 bg-yellow-400 text-zinc-900 rounded-2xl font-bold">CONFIRM</button>
+            class="flex-1 py-4 bg-yellow-400 text-zinc-900 rounded-2xl font-bold text-sm">CONFIRM</button>
         </div>
       </div>
     </div>
@@ -216,37 +223,28 @@
     let isVisible = true;
 
     const testimonialsData = [
-      { name: "Aisha Bello", email: "aisha.bello@gmail.com", text: "OFUNDS paid my ₦45,000 hospital debt in just 3 days. Life saver!" },
-      { name: "Chinedu Okoro", email: "chinedu.okoro@yahoo.com", text: "Cleared my rent debt of ₦65k. This app is legit!" },
-      { name: "Fatima Yusuf", email: "fatima.yusuf@outlook.com", text: "Earned enough to pay school fees. Thank you OFUNDS!" },
-      { name: "Emeka Nwosu", email: "emeka.nwosu@hotmail.com", text: "Paid my ₦28,000 electricity bill. Super easy withdrawals." },
-      { name: "Zainab Ibrahim", email: "zainab.ibrahim@gmail.com", text: "Cleared family debt within a week. Highly recommended!" },
-      { name: "Tunde Adebayo", email: "tunde.adebayo@proton.me", text: "Best earning app ever. Paid my car repair ₦52k." },
-      { name: "Ngozi Eze", email: "ngozi.eze@gmail.com", text: "Helped me settle my ₦38,000 shop debt. God bless OFUNDS." },
-      { name: "Ibrahim Musa", email: "ibrahim.musa@live.com", text: "Withdrew ₦70k and cleared all debts. Real and fast." },
-      { name: "Chioma Okeke", email: "chioma.okeke@gmail.com", text: "Paid my mother's medical bill. This changed my life." },
-      { name: "Suleiman Abubakar", email: "sule.abubakar@yahoo.com", text: "Earned and withdrew seamlessly. No stress at all." }
+      { name: "Aisha Bello", email: "aisha.bello@gmail.com", text: "OFUNDS helped clear my ₦45k hospital debt in days!" },
+      { name: "Chinedu Okoro", email: "chinedu.okoro@yahoo.com", text: "Paid my rent ₦65k easily. Very reliable." },
+      { name: "Fatima Yusuf", email: "fatima.yusuf@outlook.com", text: "School fees sorted. Thank you OFUNDS!" },
+      { name: "Emeka Nwosu", email: "emeka.nwosu@hotmail.com", text: "Cleared electricity bill fast." },
+      { name: "Zainab Ibrahim", email: "zainab.ibrahim@gmail.com", text: "Best earning app. Paid all my debts." }
     ];
 
     function renderTestimonials() {
       const container = document.getElementById('testimonials');
       container.innerHTML = '';
-      
       testimonialsData.forEach(t => {
         const div = document.createElement('div');
-        div.className = "testimonial-card bg-zinc-900 border border-zinc-700 rounded-3xl p-6";
+        div.className = "testimonial-card bg-zinc-900 border border-zinc-700 rounded-3xl p-5 text-sm";
         div.innerHTML = `
-          <div class="flex gap-1 text-yellow-400 mb-3">
-            ★★★★☆
-          </div>
           <p class="italic text-zinc-300">"${t.text}"</p>
-          <div class="mt-6 flex items-center gap-3">
-            <div class="w-10 h-10 bg-zinc-700 rounded-2xl flex items-center justify-center text-sm font-bold">
+          <div class="mt-4 flex items-center gap-3">
+            <div class="w-8 h-8 bg-zinc-700 rounded-2xl flex items-center justify-center text-xs font-bold">
               ${t.name.split(' ').map(n => n[0]).join('')}
             </div>
             <div>
-              <p class="font-medium">${t.name}</p>
-              <p class="text-xs text-zinc-500">${t.email}</p>
+              <p class="font-medium text-sm">${t.name}</p>
+              <p class="text-[10px] text-zinc-500">${t.email}</p>
             </div>
           </div>
         `;
@@ -263,8 +261,7 @@
 
     function togglePassword(id) {
       const input = document.getElementById(id);
-      const iconId = id.includes('login') ? 'login-eye' : 'signup-eye';
-      const icon = document.getElementById(iconId);
+      const icon = document.getElementById(id.includes('login') ? 'login-eye' : 'signup-eye');
       if (input.type === "password") {
         input.type = "text";
         icon.classList.replace('fa-eye', 'fa-eye-slash');
@@ -281,54 +278,56 @@
       const msg = document.getElementById('signup-message');
 
       if (!firstname || !email || !password) {
-        msg.textContent = "Please fill all fields";
+        msg.textContent = "Fill all fields";
         return;
       }
 
       currentUser = { firstname, email, password };
       localStorage.setItem("ofunds_user", JSON.stringify(currentUser));
-      msg.textContent = "✅ Account created! Now login.";
+      msg.textContent = "✅ Account created! Login now.";
       msg.style.color = "#4ade80";
-      setTimeout(() => switchTab(0), 1500);
+      setTimeout(() => switchTab(0), 1200);
     }
 
     function handleLogin() {
       const email = document.getElementById('login-email').value.trim();
       const password = document.getElementById('login-password').value.trim();
       const msg = document.getElementById('login-message');
-
       msg.textContent = "";
 
       if (!email || !password) {
-        msg.textContent = "Enter email and password";
+        msg.textContent = "Enter email & password";
         return;
       }
 
-      const savedData = localStorage.getItem("ofunds_user");
-      if (!savedData) {
-        msg.textContent = "No account found. Please sign up first.";
+      const saved = localStorage.getItem("ofunds_user");
+      if (!saved) {
+        msg.textContent = "No account. Sign up first.";
         return;
       }
 
-      try {
-        const user = JSON.parse(savedData);
-        if (user.email === email && user.password === password) {
-          currentUser = user;
-          document.getElementById('auth-screen').classList.add('hidden');
-          document.getElementById('dashboard').classList.remove('hidden');
-          document.getElementById('welcome-name').textContent = `Welcome back, ${user.firstname}!`;
-          updateBalanceDisplay();
-          renderTestimonials();
-        } else {
-          msg.textContent = "❌ Wrong email or password";
-        }
-      } catch(e) {
-        msg.textContent = "Error loading account.";
+      const user = JSON.parse(saved);
+      if (user.email === email && user.password === password) {
+        currentUser = user;
+        document.getElementById('auth-screen').classList.add('hidden');
+        document.getElementById('dashboard').classList.remove('hidden');
+        document.getElementById('welcome-name').textContent = `Welcome, ${user.firstname}`;
+        updateBalanceDisplay();
+        renderTestimonials();
+      } else {
+        msg.textContent = "Invalid credentials";
       }
     }
 
     function updateBalanceDisplay() {
       document.getElementById('balance').textContent = balance.toLocaleString('en-NG');
+      
+      const warning = document.getElementById('cashout-warning');
+      if (balance > MAX_BALANCE * 0.8) {
+        warning.classList.remove('hidden');
+      } else {
+        warning.classList.add('hidden');
+      }
     }
 
     function toggleBalanceVisibility() {
@@ -350,8 +349,8 @@
       const text = document.getElementById('earn-text');
 
       if (isEarning) {
-        btn.classList.add('!bg-red-500', '!hover:bg-red-600');
-        text.textContent = "STOP EARNING";
+        btn.classList.add('!bg-red-500');
+        text.textContent = "STOP";
         earningInterval = setInterval(() => {
           if (balance < MAX_BALANCE) {
             balance += 500;
@@ -359,7 +358,7 @@
             updateBalanceDisplay();
           } else {
             stopEarning();
-            alert("🎉 Maximum balance of ₦85,000 reached!");
+            alert("Maximum balance reached. Please withdraw!");
           }
         }, 1000);
       } else {
@@ -372,14 +371,13 @@
       isEarning = false;
       const btn = document.getElementById('earn-btn');
       const text = document.getElementById('earn-text');
-      btn.classList.remove('!bg-red-500', '!hover:bg-red-600');
+      btn.classList.remove('!bg-red-500');
       text.textContent = "START EARNING";
     }
 
     function showWithdrawModal() {
-      document.getElementById('modal-balance').textContent = `₦${balance.toLocaleString('en-NG')}`;
+      document.getElementById('modal-balance').textContent = `₦${balance.toLocaleString()}`;
       document.getElementById('withdraw-modal').classList.remove('hidden');
-      document.getElementById('withdraw-amount').value = "";
     }
 
     function hideWithdrawModal() {
@@ -387,26 +385,23 @@
     }
 
     function processWithdrawal() {
-      const amountInput = document.getElementById('withdraw-amount');
-      let amount = parseFloat(amountInput.value);
-
+      const amount = parseFloat(document.getElementById('withdraw-amount').value);
       if (!amount || amount < 1000) {
-        alert("Minimum withdrawal is ₦1,000");
+        alert("Minimum ₦1,000");
         return;
       }
       if (amount > balance) {
-        alert("Insufficient balance!");
+        alert("Not enough balance");
         return;
       }
-
       balance -= amount;
       updateBalanceDisplay();
       hideWithdrawModal();
-      alert(`✅ ₦${amount.toLocaleString()} withdrawn successfully!\n\nCheck your bank in 24hrs.`);
+      alert(`✅ ₦${amount.toLocaleString()} withdrawn (simulated)`);
     }
 
     function logout() {
-      if (confirm("Logout from OFUNDS?")) {
+      if (confirm("Logout?")) {
         document.getElementById('dashboard').classList.add('hidden');
         document.getElementById('auth-screen').classList.remove('hidden');
         stopEarning();
@@ -416,4 +411,4 @@
     window.onload = () => {};
   </script>
 </body>
-            </html>
+  </html>
